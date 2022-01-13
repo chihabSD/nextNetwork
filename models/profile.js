@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProfielSchema = mongoose.Schema(
+const ProfileSchema = mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     bio: { type: String, require: true },
@@ -13,4 +13,4 @@ const ProfielSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Profile", ProfielSchema);
+module.exports = mongoose.model("Profile", ProfileSchema);
