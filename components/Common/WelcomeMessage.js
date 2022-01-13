@@ -1,32 +1,33 @@
-import Link from "next/link";
+import { Icon, Message, Divider } from "semantic-ui-react";
 import { useRouter } from "next/router";
-import { Message, Divider, Icon } from "semantic-ui-react";
+import Link from "next/link";
 
 export const HeaderMessage = () => {
   const router = useRouter();
   const signupRoute = router.pathname === "/signup";
+
   return (
     <Message
+      color="teal"
       attached
-      header={signupRoute ? "Get started" : "Welcome Back"}
+      header={signupRoute ? "Get Started" : "Welcome Back"}
       icon={signupRoute ? "settings" : "privacy"}
-      content={
-        signupRoute ? "Create new account" : "Login with Email and password"
-      }
+      content={signupRoute ? "Create New Account" : "Login with Email and Password"}
     />
   );
 };
+
 export const FooterMessage = () => {
   const router = useRouter();
-
   const signupRoute = router.pathname === "/signup";
+
   return (
     <>
       {signupRoute ? (
         <>
-          <Message color="teal" attached="bottom" warning>
+          <Message attached="bottom" warning>
             <Icon name="help" />
-            Existing user ? <Link href="/login"> Login in here instead</Link>
+            Existing User? <Link href="/login">Login Here Instead</Link>
           </Message>
           <Divider hidden />
         </>
@@ -34,23 +35,15 @@ export const FooterMessage = () => {
         <>
           <Message attached="bottom" info>
             <Icon name="lock" />
-            <Link href="/reset"> Forgot password ?</Link>
+            <Link href="/reset">Forgot Password?</Link>
           </Message>
-          <Divider hidden />
 
           <Message attached="bottom" warning>
-            {/* <Icon name="help" /> */}
-            New User ? <Link href="/signup"> Signup here </Link> Instead
+            <Icon name="help" />
+            New User? <Link href="/signup">Signup Here</Link> Instead{" "}
           </Message>
-          <Divider hidden />
         </>
       )}
     </>
   );
-  //   return <>
-  //   {signupRoute ? <> `<Message  attached="bottom" warning/>
-
-  //   <Icon />
-  //   `}
-  //   </>
 };
