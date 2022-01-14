@@ -62,7 +62,32 @@ router.get("/", authMiddleware, async (req, res) => {
         .populate("comments.user");
     }
 
-    return res.json(posts);
+    // Update, see only posts of user that you are following
+    const { userId } = req;
+    const loggedUser = await FollowerModel.findOne({ user: userId });
+    if (posts.length === 0) {
+      return res.json([]);
+    }
+
+    let postsTobeSent = [];
+    // if user is not following any one,
+    if (loggedUser.following.length === 0) {
+      postsTobeSent = posts.filter(
+        (post) => post.user._id.toString() === userId
+      );
+    } else {
+      for (let i = 0; i < loggedUser.following.length; i++) {
+        const foundPosts = posts.filter(
+          (post) =>
+            post.user._id.toString() ===
+              loggedUser.following[i].user.toString() ||
+            post.user._id.toString() === userId
+        );
+        //
+        if (foundPosts.length > 0) postsTobeSent.push(...foundPosts);
+      }
+    }
+    return res.json(postsTobeSent);
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

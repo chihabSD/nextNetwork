@@ -5,7 +5,9 @@ import baseUrl from "../utils/baseUrl";
 import { parseCookies } from "nookies";
 import { Grid } from "semantic-ui-react";
 import { NoProfilePosts, NoProfile } from "../components/Layout/NoData";
+
 import CardPost from "../components/Post/CardPost";
+
 import cookie from "js-cookie";
 import { PlaceHolderPosts } from "../components/Layout/PlaceHolderGroup";
 import ProfileMenuTabs from "../components/Profile/ProfileMenuTabs";
