@@ -34,7 +34,7 @@ function ProfilePage({
   const handleItemClick = (clickedTab) => setActiveItem(clickedTab);
 
   const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
-
+  console.log("user profile", profile);
   const ownAccount = profile.user._id === user._id;
 
   if (errorLoading) return <NoProfile />;
