@@ -1,13 +1,16 @@
 import React from "react";
-import { List, Icon } from "semantic-ui-react";
+import { List, Icon, Menu, Item } from "semantic-ui-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { logoutUser } from "../../utils/authUser";
 
-function SideMenu({ user: { unreadNotification, email, unreadMessage, username } }) {
+function SideMenu({
+  user: { unreadNotification, email, unreadMessage, username },
+}) {
   const router = useRouter();
 
-  const isActive = route => router.pathname === route;
+  const isActive = (route) => router.pathname === route;
+  // const signupRoute = router.pathname === "/signup";
 
   return (
     <>
@@ -15,9 +18,10 @@ function SideMenu({ user: { unreadNotification, email, unreadMessage, username }
         style={{ paddingTop: "1rem" }}
         size="big"
         verticalAlign="middle"
-        selection>
+        selection
+      >
         <Link href="/">
-          <List.Item active={isActive("/")}>
+          <List.Item active={isActive("/notifications")}>
             <Icon name="home" size="large" color={isActive("/") && "teal"} />
             <List.Content>
               <List.Header content="Home" />
@@ -26,6 +30,7 @@ function SideMenu({ user: { unreadNotification, email, unreadMessage, username }
         </Link>
         <br />
 
+        <Link href="/notifications">hkjhk</Link>
         <Link href="/messages">
           <List.Item active={isActive("/messages")}>
             <Icon
