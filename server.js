@@ -16,6 +16,7 @@ nextApp.prepare().then(() => {
   app.use("/api/auth", require("./api/auth"));
   app.use("/api/search", require("./api/search"));
   app.use("/api/posts", require("./api/posts"));
+  app.use("/api/profile", require("./api/profile"));
 
   app.all("*", (req, res) => handle(req, res));
 
@@ -24,31 +25,3 @@ nextApp.prepare().then(() => {
     console.log(`> Ready on http://localhost:${PORT}`);
   });
 });
-
-// const express = require("express");
-// const app = express();
-// const next = require("next");
-// const server = require("http").Server(app);
-// const dev = process.env.NODE_ENV !== "production";
-
-// const nextApp = next({ dev });
-// const handle = nextApp.getRequestHandler();
-// const PORT = process.env.NODE_ENV || 3000;
-// require("dotenv").config({ path: "./config.env" });
-// const connectDB = require("./utilsServer/connectDb");
-// connectDB();
-// app.use(express.json());
-
-// nextApp.prepare().then(() => {
-//   app.use("/api/signup", require("./api/signup"));
-//   app.use("/api/auth", require("./api/auth"));
-
-//   app.all("*", (req, res) => {
-//     return handle(req, res);
-//   });
-
-//   server.listen(PORT, (err) => {
-//     if (err) throw err;
-//     console.log(`> Ready on http://localhost:${PORT}`);
-//   });
-// });
