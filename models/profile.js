@@ -1,14 +1,18 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const ProfileSchema = mongoose.Schema(
+const ProfileSchema = new Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    bio: { type: String, require: true },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+
+    bio: { type: String, required: true },
+
     social: {
-      youtube: { type: String },
+      facebook: { type: String },
       twitter: { type: String },
-      instgram: { type: String },
-    },
+      youtube: { type: String },
+      instagram: { type: String }
+    }
   },
   { timestamps: true }
 );
