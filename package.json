@@ -1,11 +1,11 @@
 {
-  "name": "nextnetwork",
-  "private": true,
+  "name": "inder-social-media",
+  "version": "0.1.0",
+  "private": false,
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@artsy/fresnel": "^1.2.2",
@@ -35,9 +35,5 @@
     "socket.io-client": "^2.3.0",
     "uuid": "^8.2.0",
     "validator": "^13.0.0"
-  },
-  "devDependencies": {
-    "eslint": "8.6.0",
-    "eslint-config-next": "12.0.8"
   }
 }

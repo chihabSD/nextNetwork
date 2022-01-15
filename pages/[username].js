@@ -5,9 +5,7 @@ import baseUrl from "../utils/baseUrl";
 import { parseCookies } from "nookies";
 import { Grid } from "semantic-ui-react";
 import { NoProfilePosts, NoProfile } from "../components/Layout/NoData";
-
 import CardPost from "../components/Post/CardPost";
-
 import cookie from "js-cookie";
 import { PlaceHolderPosts } from "../components/Layout/PlaceHolderGroup";
 import ProfileMenuTabs from "../components/Profile/ProfileMenuTabs";
@@ -24,7 +22,7 @@ function ProfilePage({
   followersLength,
   followingLength,
   user,
-  userFollowStats,
+  userFollowStats
 }) {
   const router = useRouter();
 
@@ -33,10 +31,10 @@ function ProfilePage({
   const [showToastr, setShowToastr] = useState(false);
 
   const [activeItem, setActiveItem] = useState("profile");
-  const handleItemClick = (clickedTab) => setActiveItem(clickedTab);
+  const handleItemClick = clickedTab => setActiveItem(clickedTab);
 
   const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
-  console.log("user profile", profile);
+
   const ownAccount = profile.user._id === user._id;
 
   if (errorLoading) return <NoProfile />;
@@ -47,12 +45,9 @@ function ProfilePage({
 
       try {
         const { username } = router.query;
-        const res = await axios.get(
-          `${baseUrl}/api/profile/posts/${username}`,
-          {
-            headers: { Authorization: cookie.get("token") },
-          }
-        );
+        const res = await axios.get(`${baseUrl}/api/profile/posts/${username}`, {
+          headers: { Authorization: cookie.get("token") }
+        });
 
         setPosts(res.data);
       } catch (error) {
@@ -100,7 +95,7 @@ function ProfilePage({
                 {loading ? (
                   <PlaceHolderPosts />
                 ) : posts.length > 0 ? (
-                  posts.map((post) => (
+                  posts.map(post => (
                     <CardPost
                       key={post._id}
                       post={post}
@@ -133,9 +128,7 @@ function ProfilePage({
               />
             )}
 
-            {activeItem === "updateProfile" && (
-              <UpdateProfile Profile={profile} />
-            )}
+            {activeItem === "updateProfile" && <UpdateProfile Profile={profile} />}
 
             {activeItem === "settings" && (
               <Settings newMessagePopup={user.newMessagePopup} />
@@ -147,13 +140,13 @@ function ProfilePage({
   );
 }
 
-ProfilePage.getInitialProps = async (ctx) => {
+ProfilePage.getInitialProps = async ctx => {
   try {
     const { username } = ctx.query;
     const { token } = parseCookies(ctx);
 
     const res = await axios.get(`${baseUrl}/api/profile/${username}`, {
-      headers: { Authorization: token },
+      headers: { Authorization: token }
     });
 
     const { profile, followersLength, followingLength } = res.data;
