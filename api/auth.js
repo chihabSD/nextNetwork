@@ -13,6 +13,9 @@ router.get("/", authMiddleware, async (req, res) => {
 
   try {
     const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
 
     const userFollowStats = await FollowerModel.findOne({ user: userId });
 
@@ -46,17 +49,22 @@ router.post("/", async (req, res) => {
       return res.status(401).send("Invalid Credentials");
     }
 
-    const notificationModel = await NotificationModel.findOne({ user: user._id });
-
+    const notificationModel = await NotificationModel.findOne({
+      user: user._id,
+    });
     if (!notificationModel) {
       await new NotificationModel({ user: user._id, notifications: [] }).save();
     }
-
     const payload = { userId: user._id };
-    jwt.sign(payload, process.env.jwtSecret, { expiresIn: "2d" }, (err, token) => {
-      if (err) throw err;
-      res.status(200).json(token);
-    });
+    jwt.sign(
+      payload,
+      process.env.jwtSecret,
+      { expiresIn: "2d" },
+      (err, token) => {
+        if (err) throw err;
+        res.status(200).json(token);
+      }
+    );
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Feed, Segment, Divider, Container } from "semantic-ui-react";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
@@ -44,30 +44,24 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
             >
               <Feed size="small">
                 {notifications.map(notification => (
-                  <>
+                  <Fragment key={notification._id}>
                     {notification.type === "newLike" && notification.post !== null && (
-                      <LikeNotification
-                        key={notification._id}
-                        notification={notification}
-                      />
+                      <LikeNotification notification={notification} />
                     )}
 
-                    {notification.type === "newComment" && notification.post !== null && (
-                      <CommentNotification
-                        key={notification._id}
-                        notification={notification}
-                      />
-                    )}
+                    {notification.type === "newComment" &&
+                      notification.post !== null && (
+                        <CommentNotification notification={notification} />
+                      )}
 
                     {notification.type === "newFollower" && (
                       <FollowerNotification
-                        key={notification._id}
                         notification={notification}
                         loggedUserFollowStats={loggedUserFollowStats}
                         setUserFollowStats={setUserFollowStats}
                       />
                     )}
-                  </>
+                  </Fragment>
                 ))}
               </Feed>
             </div>
