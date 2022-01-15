@@ -1,7 +1,7 @@
 const UserModel = require("../models/UserModel");
 const NotificationModel = require("../models/NotificationModel");
 
-const setNotificationToUnread = async (userId) => {
+const setNotificationToUnread = async userId => {
   try {
     const user = await UserModel.findById(userId);
 
@@ -18,15 +18,13 @@ const setNotificationToUnread = async (userId) => {
 
 const newLikeNotification = async (userId, postId, userToNotifyId) => {
   try {
-    const userToNotify = await NotificationModel.findOne({
-      user: userToNotifyId,
-    });
+    const userToNotify = await NotificationModel.findOne({ user: userToNotifyId });
 
     const newNotification = {
       type: "newLike",
       user: userId,
       post: postId,
-      date: Date.now(),
+      date: Date.now()
     };
 
     await userToNotify.notifications.unshift(newNotification);
@@ -48,11 +46,27 @@ const removeLikeNotification = async (userId, postId, userToNotifyId) => {
           notifications: {
             type: "newLike",
             user: userId,
-            post: postId,
-          },
-        },
+            post: postId
+          }
+        }
       }
     );
+
+    // const user = await NotificationModel.findOne({ user: userToNotifyId });
+    //
+    // const notificationToRemove = await user.notifications.find(
+    //   notification =>
+    //     notification.type === "newLike" &&
+    //     notification.user.toString() === userId &&
+    //     notification.post.toString() === postId
+    // );
+
+    // const indexOf = user.notifications
+    //   .map(notification => notification._id.toString())
+    //   .indexOf(notificationToRemove._id.toString());
+
+    // await user.notifications.splice(indexOf, 1);
+    // await user.save();
 
     return;
   } catch (error) {
@@ -68,9 +82,7 @@ const newCommentNotification = async (
   text
 ) => {
   try {
-    const userToNotify = await NotificationModel.findOne({
-      user: userToNotifyId,
-    });
+    const userToNotify = await NotificationModel.findOne({ user: userToNotifyId });
 
     const newNotification = {
       type: "newComment",
@@ -78,7 +90,7 @@ const newCommentNotification = async (
       post: postId,
       commentId,
       text,
-      date: Date.now(),
+      date: Date.now()
     };
 
     await userToNotify.notifications.unshift(newNotification);
@@ -92,12 +104,7 @@ const newCommentNotification = async (
   }
 };
 
-const removeCommentNotification = async (
-  postId,
-  commentId,
-  userId,
-  userToNotifyId
-) => {
+const removeCommentNotification = async (postId, commentId, userId, userToNotifyId) => {
   try {
     await NotificationModel.findOneAndUpdate(
       { user: userToNotifyId },
@@ -107,9 +114,9 @@ const removeCommentNotification = async (
             type: "newComment",
             user: userId,
             post: postId,
-            commentId: commentId,
-          },
-        },
+            commentId: commentId
+          }
+        }
       }
     );
 
@@ -141,7 +148,7 @@ const newFollowerNotification = async (userId, userToNotifyId) => {
     const newNotification = {
       type: "newFollower",
       user: userId,
-      date: Date.now(),
+      date: Date.now()
     };
 
     await user.notifications.unshift(newNotification);
@@ -163,6 +170,20 @@ const removeFollowerNotification = async (userId, userToNotifyId) => {
     );
 
     return;
+
+    // const user = await NotificationModel.findOne({ user: userToNotifyId });
+    // const notificationToRemove = await user.notifications.find(
+    //   notification =>
+    //     notification.type === "newFollower" && notification.user.toString() === userId
+    // );
+
+    // const indexOf = await user.notifications
+    //   .map(notification => notification._id.toString())
+    //   .indexOf(notificationToRemove._id.toString());
+
+    // await user.notifications.splice(indexOf, 1);
+
+    // await user.save();
   } catch (error) {
     console.error(error);
   }
@@ -174,5 +195,5 @@ module.exports = {
   newCommentNotification,
   removeCommentNotification,
   newFollowerNotification,
-  removeFollowerNotification,
+  removeFollowerNotification
 };

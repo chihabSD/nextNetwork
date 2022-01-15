@@ -30,12 +30,11 @@ io.on("connection", (socket) => {
     const users = await addUser(userId, socket.id);
     console.log(users);
 
-    // send online users every 10 seconds
     setInterval(() => {
       socket.emit("connectedUsers", {
         users: users.filter((user) => user.userId !== userId),
       });
-    }, 10000);
+    }, 3000);
   });
 
   socket.on("likePost", async ({ postId, userId, like }) => {
