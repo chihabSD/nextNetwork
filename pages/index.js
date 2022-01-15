@@ -9,7 +9,10 @@ import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { PlaceHolderPosts, EndMessage } from "../components/Layout/PlaceHolderGroup";
+import {
+  PlaceHolderPosts,
+  EndMessage,
+} from "../components/Layout/PlaceHolderGroup";
 import cookie from "js-cookie";
 import getUserInfo from "../utils/getUserInfo";
 import MessageNotificationModal from "../components/Home/MessageNotificationModal";
@@ -46,7 +49,7 @@ function Index({ user, postsData, errorLoading }) {
           setNewMessageReceived({
             ...newMsg,
             senderName: name,
-            senderProfilePic: profilePicUrl
+            senderProfilePic: profilePicUrl,
           });
           showNewMessageModal(true);
         }
@@ -65,13 +68,13 @@ function Index({ user, postsData, errorLoading }) {
     try {
       const res = await axios.get(`${baseUrl}/api/posts`, {
         headers: { Authorization: cookie.get("token") },
-        params: { pageNumber }
+        params: { pageNumber },
       });
 
       if (res.data.length === 0) setHasMore(false);
 
-      setPosts(prev => [...prev, ...res.data]);
-      setPageNumber(prev => prev + 1);
+      setPosts((prev) => [...prev, ...res.data]);
+      setPageNumber((prev) => prev + 1);
     } catch (error) {
       alert("Error fetching Posts");
     }
@@ -125,7 +128,7 @@ function Index({ user, postsData, errorLoading }) {
             endMessage={<EndMessage />}
             dataLength={posts.length}
           >
-            {posts.map(post => (
+            {posts.map((post) => (
               <CardPost
                 socket={socket}
                 key={post._id}
@@ -142,13 +145,13 @@ function Index({ user, postsData, errorLoading }) {
   );
 }
 
-Index.getInitialProps = async ctx => {
+Index.getInitialProps = async (ctx) => {
   try {
     const { token } = parseCookies(ctx);
 
     const res = await axios.get(`${baseUrl}/api/posts`, {
       headers: { Authorization: token },
-      params: { pageNumber: 1 }
+      params: { pageNumber: 1 },
     });
 
     return { postsData: res.data };
