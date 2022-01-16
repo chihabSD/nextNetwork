@@ -1,4 +1,4 @@
-import { Message, Button } from "semantic-ui-react";
+import { Message, Button, Icon } from "semantic-ui-react";
 import styled from "styled-components";
 export const NoProfilePosts = () => (
   <>
@@ -60,7 +60,13 @@ export const NoProfile = () => (
 );
 
 export const NoNotifications = () => (
-  <Message content="No Notifications" icon="smile" info />
+  <EmptyNotification>
+    <Icon name="bell" size="huge" />
+    <NoNotificationTitle>No notification</NoNotificationTitle>
+    <NoNotificationSubTitle>
+      When you get notifications, they'll show up here
+    </NoNotificationSubTitle>
+  </EmptyNotification>
 );
 
 export const NoPostFound = () => (
@@ -74,6 +80,23 @@ export const NoUserFound = () => (
 
 const NoResultUserFound = styled.p`
   display: flex;
+  align-items: center;
+  color: gray;
+`;
+const EmptyNotification = styled.div`
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const NoNotificationTitle = styled.h3`
+  align-items: center;
+`;
+
+const NoNotificationSubTitle = styled.p`
   align-items: center;
   color: gray;
 `;

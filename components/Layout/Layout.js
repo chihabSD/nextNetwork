@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { Children, createRef } from "react";
 import HeadTags from "./HeadTags";
 import Navbar from "./Navbar";
 import {
@@ -16,7 +16,7 @@ import Search from "./Search";
 import MobileHeader from "./MobileHeader";
 import { createMedia } from "@artsy/fresnel";
 import Header from "../Common/Header";
-
+import styled from "styled-components";
 const AppMedia = createMedia({
   breakpoints: { zero: 0, mobile: 549, tablet: 850, computer: 1080 },
 });
@@ -29,21 +29,23 @@ function Layout({ children, user }) {
   const router = useRouter();
 
   const messagesRoute = router.pathname === "/messages";
+  const notificaitonRoute = router.pathname === "/notification";
 
   Router.onRouteChangeStart = () => nprogress.start();
   Router.onRouteChangeComplete = () => nprogress.done();
   Router.onRouteChangeError = () => nprogress.done();
 
   return (
-    <div style={{ backgroundColor: "#edeef0" }}>
-      {/* <div style={{ backgroundColor: "white" }}> */}
-      {/* <HeadTags /> */}
+    <div style={{ backgroundColor: "#edeef0", paddingBottom: 100 }}>
       {user ? (
         <>
           <Header user={user} />
           <style>{mediaStyles}</style>
-
-          <MediaContextProvider>
+          <DataContainer>
+            <SideMenu user={user} pc={false} />
+            <ChildrenContainer>{children}</ChildrenContainer>
+          </DataContainer>
+          {/* <MediaContextProvider>
             <div
               style={{
                 marginLeft: "2rem",
@@ -52,7 +54,6 @@ function Layout({ children, user }) {
                 paddingLeft: "1rem",
                 paddingRight: "1rem",
                 height: "90vh",
-                // backgroundColor: "white",
                 backgroundColor: "#edeef0",
               }}
             >
@@ -152,7 +153,7 @@ function Layout({ children, user }) {
                 </Grid>
               </Media>
             </div>
-          </MediaContextProvider>
+          </MediaContextProvider> */}
         </>
       ) : (
         <>
@@ -167,3 +168,16 @@ function Layout({ children, user }) {
 }
 
 export default Layout;
+const DataContainer = styled.div`
+  /* background-color: red; */
+  display: flex;
+  padding: 0 20px;
+  /* height: 90vh; */
+  flex-direction: row;
+`;
+const ChildrenContainer = styled.div`
+  margin-left: 15px;
+  display: flex;
+  flex: 1;
+  height: 70vh;
+`;

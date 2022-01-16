@@ -22,7 +22,7 @@ function SideMenu({
   const isActive = (route) => router.pathname === route;
   let menus = [
     { name: "Home", icon: "home" },
-    { name: "userList", icon: "user plus" },
+    { name: "UserList", icon: "user plus" },
     { name: "Messages", icon: "mail" },
     { name: "Notifications", icon: "bell outline" },
     { name: "Profile", icon: "user" },
@@ -30,7 +30,7 @@ function SideMenu({
     { name: "Logout", icon: "log out" },
   ];
   return (
-    <>
+    <div>
       <UserInfoContainer>
         <ProfileImageContainer>
           <ProfileImage src={userPng}></ProfileImage>
@@ -41,15 +41,131 @@ function SideMenu({
         </Info>
       </UserInfoContainer>
       <MenuContainer>
-        {menus.map((menu) => (
-          // <h1 key={menu.name}>{menu.name}</h1>
+        {menus.map((menu) => {
+          const { name } = menu;
+          if (name === "Home") {
+            return (
+              <Link href="/">
+                <MenuItem key={menu.name}>
+                  {/* <Icon name={menu.icon} size="large" /> */}
+                  <Icon
+                    name={menu.icon}
+                    size="large"
+                    {...(isActive("/") && { color: "teal" })}
+                  />
+                  <MenuItemName>{menu.name}</MenuItemName>
+                </MenuItem>
+              </Link>
+            );
+          }
+
+          if (name === "UserList") {
+            return (
+              <Link href="/users">
+                <MenuItem key={menu.name}>
+                  {/* <Icon name={menu.icon} size="large" /> */}
+                  <Icon
+                    name={menu.icon}
+                    size="large"
+                    {...(isActive("/users") && { color: "teal" })}
+                  />
+                  <MenuItemName>{menu.name}</MenuItemName>
+                </MenuItem>
+              </Link>
+            );
+          }
+
+          if (name === "Messages") {
+            return (
+              <Link href="/messages">
+                <MenuItem key={menu.name}>
+                  {/* <Icon name={menu.icon} size="large" /> */}
+                  <Icon
+                    name={unreadMessage ? "hand point right" : "mail outline"}
+                    size="large"
+                    {...((isActive("/messages") && { color: "teal" }) ||
+                      (unreadMessage && { color: "orange" }))}
+                  />
+                  <MenuItemName>{menu.name}</MenuItemName>
+                </MenuItem>
+              </Link>
+            );
+          }
+          if (name === "Notifications") {
+            return (
+              <Link href="/notifications">
+                <MenuItem key={menu.name}>
+                  {/* <Icon name={menu.icon} size="large" /> */}
+                  <Icon
+                    name={
+                      unreadNotification ? "hand point right" : "bell outline"
+                    }
+                    size="large"
+                    {...((isActive("/notifications") && { color: "teal" }) ||
+                      (unreadNotification && { color: "orange" }))}
+                  />
+                  <MenuItemName>{menu.name}</MenuItemName>
+                </MenuItem>
+              </Link>
+            );
+          }
+
+          if (name === "Profile") {
+            return (
+              <Link href={`/${username}`}>
+                <MenuItem key={menu.name}>
+                  {/* <Icon name={menu.icon} size="large" /> */}
+                  <Icon
+                    name={menu.icon}
+                    size="large"
+                    {...(router.query.username === username && {
+                      color: "teal",
+                    })}
+                  />
+                  <MenuItemName>{menu.name}</MenuItemName>
+                </MenuItem>
+              </Link>
+            );
+          }
+
+          if (name === "Settings") {
+            return (
+              // <Link href={`/set${username}`}>
+              <Link href={`/settings`}>
+                <MenuItem key={menu.name}>
+                  {/* <Icon name={menu.icon} size="large" /> */}
+                  <Icon
+                    name={menu.icon}
+                    size="large"
+                    {...(router.query.username === username && {
+                      color: "teal",
+                    })}
+                  />
+                  <MenuItemName>{menu.name}</MenuItemName>
+                </MenuItem>
+              </Link>
+            );
+          }
+          if (name === "Logout") {
+            return (
+              <MenuItem key={menu.name} onClick={() => logoutUser(email)}>
+                {/* <Icon name={menu.icon} size="large" /> */}
+                <Icon name={menu.icon} size="large" color={"red"} />
+                <MenuItemName>{menu.name}</MenuItemName>
+              </MenuItem>
+            );
+          }
+        })}
+        {/* {menus.map((menu) => (
+
+          
           <MenuItem key={menu.name}>
             <Icon name={menu.icon} size="large" />
             <MenuItemName>{menu.name}</MenuItemName>
           </MenuItem>
-        ))}
+        ))} */}
       </MenuContainer>
-    </>
+    </div>
     // <>
     //   <List
     //     style={{ paddingTop: "1rem" }}
@@ -119,7 +235,7 @@ function SideMenu({
 
 export default SideMenu;
 const MenuContainer = styled.div`
-  padding: 10px;
+  /* padding: 10px; */
   -webkit-box-shadow: -2px 0px 5px -27px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: -2px 0px 5px -27px rgba(0, 0, 0, 0.75);
   box-shadow: -2px 0px 5px -27px rgba(0, 0, 0, 0.75);
@@ -129,12 +245,19 @@ const MenuContainer = styled.div`
   width: 250px;
 `;
 const MenuItem = styled.div`
-  margin: 15px 20px;
+  margin: 5px 20px;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
+  border-radius: 10px;
+  padding: 15px 10px;
   border-bottom: 1px solid #f1f1f1;
+
   align-items: center;
+  &:hover {
+    background-color: #f1f1f1;
+  }
 `;
 const MenuItemName = styled.p`
   line-height: 0.5rem;
