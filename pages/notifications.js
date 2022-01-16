@@ -29,58 +29,62 @@ function Notifications({ notifications, errorLoading, user, userFollowStats }) {
   }, []);
 
   return (
-    <>
-      <Container style={{ marginTop: "1.5rem" }}>
-        {notifications.length > 0 ? (
-          <Segment color="teal" raised>
-            <div
-              style={{
-                maxHeight: "40rem",
-                overflow: "auto",
-                height: "40rem",
-                position: "relative",
-                width: "100%"
-              }}
-            >
-              <Feed size="small">
-                {notifications.map(notification => (
-                  <Fragment key={notification._id}>
-                    {notification.type === "newLike" && notification.post !== null && (
+    <div
+      style={{
+        backgroundColor: "white",
+        width: "100%",
+      }}
+    >
+      {notifications.length > 0 ? (
+        <Segment color="teal" raised>
+          <div
+            style={{
+              maxHeight: "40rem",
+              overflow: "auto",
+              height: "40rem",
+              position: "relative",
+              width: "100%",
+            }}
+          >
+            <Feed size="small">
+              {notifications.map((notification) => (
+                <Fragment key={notification._id}>
+                  {notification.type === "newLike" &&
+                    notification.post !== null && (
                       <LikeNotification notification={notification} />
                     )}
 
-                    {notification.type === "newComment" &&
-                      notification.post !== null && (
-                        <CommentNotification notification={notification} />
-                      )}
-
-                    {notification.type === "newFollower" && (
-                      <FollowerNotification
-                        notification={notification}
-                        loggedUserFollowStats={loggedUserFollowStats}
-                        setUserFollowStats={setUserFollowStats}
-                      />
+                  {notification.type === "newComment" &&
+                    notification.post !== null && (
+                      <CommentNotification notification={notification} />
                     )}
-                  </Fragment>
-                ))}
-              </Feed>
-            </div>
-          </Segment>
-        ) : (
-          <NoNotifications />
-        )}
-        <Divider hidden />
-      </Container>
-    </>
+
+                  {notification.type === "newFollower" && (
+                    <FollowerNotification
+                      notification={notification}
+                      loggedUserFollowStats={loggedUserFollowStats}
+                      setUserFollowStats={setUserFollowStats}
+                    />
+                  )}
+                </Fragment>
+              ))}
+            </Feed>
+          </div>
+        </Segment>
+      ) : (
+        <NoNotifications />
+      )}
+      <Divider hidden />
+    </div>
   );
 }
 
-Notifications.getInitialProps = async ctx => {
+Notifications.getInitialProps = async (ctx) => {
   try {
     const { token } = parseCookies(ctx);
 
     const res = await axios.get(`${baseUrl}/api/notifications`, {
-      headers: { Authorization: token }
+      headers: { Authorization: token },
     });
 
     return { notifications: res.data };

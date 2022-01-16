@@ -23,7 +23,7 @@ function ProfilePage({
   followersLength,
   followingLength,
   user,
-  userFollowStats
+  userFollowStats,
 }) {
   const router = useRouter();
 
@@ -32,7 +32,7 @@ function ProfilePage({
   const [showToastr, setShowToastr] = useState(false);
 
   const [activeItem, setActiveItem] = useState("profile");
-  const handleItemClick = clickedTab => setActiveItem(clickedTab);
+  const handleItemClick = (clickedTab) => setActiveItem(clickedTab);
 
   const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
 
@@ -46,9 +46,12 @@ function ProfilePage({
 
       try {
         const { username } = router.query;
-        const res = await axios.get(`${baseUrl}/api/profile/posts/${username}`, {
-          headers: { Authorization: cookie.get("token") }
-        });
+        const res = await axios.get(
+          `${baseUrl}/api/profile/posts/${username}`,
+          {
+            headers: { Authorization: cookie.get("token") },
+          }
+        );
 
         setPosts(res.data);
       } catch (error) {
@@ -77,7 +80,12 @@ function ProfilePage({
   }, []);
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: "white",
+        width: "100%",
+      }}
+    >
       {showToastr && <PostDeleteToastr />}
 
       <Grid stackable>
@@ -108,7 +116,7 @@ function ProfilePage({
                 {loading ? (
                   <PlaceHolderPosts />
                 ) : posts.length > 0 ? (
-                  posts.map(post => (
+                  posts.map((post) => (
                     <CardPost
                       socket={socket}
                       key={post._id}
@@ -142,7 +150,9 @@ function ProfilePage({
               />
             )}
 
-            {activeItem === "updateProfile" && <UpdateProfile Profile={profile} />}
+            {activeItem === "updateProfile" && (
+              <UpdateProfile Profile={profile} />
+            )}
 
             {activeItem === "settings" && (
               <Settings newMessagePopup={user.newMessagePopup} />
@@ -150,17 +160,17 @@ function ProfilePage({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </>
+    </div>
   );
 }
 
-ProfilePage.getInitialProps = async ctx => {
+ProfilePage.getInitialProps = async (ctx) => {
   try {
     const { username } = ctx.query;
     const { token } = parseCookies(ctx);
 
     const res = await axios.get(`${baseUrl}/api/profile/${username}`, {
-      headers: { Authorization: token }
+      headers: { Authorization: token },
     });
 
     const { profile, followersLength, followingLength } = res.data;

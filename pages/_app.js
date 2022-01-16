@@ -25,7 +25,8 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     ctx.pathname === "/notifications" ||
     ctx.pathname === "/post/[postId]" ||
     ctx.pathname === "/messages" ||
-    ctx.pathname === "/search";
+    ctx.pathname === "/search" ||
+    ctx.pathname === "/users";
 
   if (!token) {
     destroyCookie(ctx, "token");

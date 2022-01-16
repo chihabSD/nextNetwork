@@ -44,6 +44,7 @@ function Layout({ children, user }) {
           <DataContainer>
             <SideMenu user={user} pc={false} />
             <ChildrenContainer>{children}</ChildrenContainer>
+            <RightSide> Right side </RightSide>
           </DataContainer>
           {/* <MediaContextProvider>
             <div
@@ -179,5 +180,13 @@ const ChildrenContainer = styled.div`
   margin-left: 15px;
   display: flex;
   flex: 1;
+  height: 70vh;
+`;
+
+const RightSide = styled.div`
+  margin-left: 15px;
+  background-color: white;
+  display: flex;
+  width: 300px;
   height: 70vh;
 `;
