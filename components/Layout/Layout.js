@@ -17,6 +17,7 @@ import MobileHeader from "./MobileHeader";
 import { createMedia } from "@artsy/fresnel";
 import Header from "../Common/Header";
 import styled from "styled-components";
+import RightSideContainer from "../Common/RightSide";
 const AppMedia = createMedia({
   breakpoints: { zero: 0, mobile: 549, tablet: 850, computer: 1080 },
 });
@@ -44,7 +45,7 @@ function Layout({ children, user }) {
           <DataContainer>
             <SideMenu user={user} pc={false} />
             <ChildrenContainer>{children}</ChildrenContainer>
-            <RightSide> Right side </RightSide>
+            <RightSideContainer />
           </DataContainer>
           {/* <MediaContextProvider>
             <div

@@ -38,12 +38,23 @@ export const NoFollowData = ({ followersComponent, followingComponent }) => (
 );
 
 export const NoMessages = () => (
-  <Message
-    info
-    icon="telegram plane"
-    header="Sorry"
-    content="You have not messaged anyone yet.Search above to message someone!"
-  />
+  <EmptyNotification>
+    <Icon name="mail" size="huge" />
+    <NoNotificationTitle>No active messages</NoNotificationTitle>
+    <NoNotificationSubTitle>
+      You have not messaged anyone yet
+    </NoNotificationSubTitle>
+    <NoNotificationSubTitle>
+      Search or select one of your friend list on the left and start talking!
+    </NoNotificationSubTitle>
+  </EmptyNotification>
+
+  // <Message
+  //   info
+  //   icon="telegram plane"
+  //   header="Sorry"
+  //   content="You have not messaged anyone yet.Search above to message someone!"
+  // />
 );
 
 export const NoPosts = () => (
@@ -98,5 +109,6 @@ const NoNotificationTitle = styled.h3`
 
 const NoNotificationSubTitle = styled.p`
   align-items: center;
+  line-height: 0.5rem;
   color: gray;
 `;

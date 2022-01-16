@@ -5,7 +5,7 @@ import Search from "../components/Layout/Search";
 import styled from "styled-components";
 const userPng =
   "https://res.cloudinary.com/indersingh/image/upload/v1593464618/App/user_mklcpl.png";
-function Users() {
+function Settings() {
   return (
     <div
       style={{
@@ -22,7 +22,7 @@ function Users() {
   );
 }
 
-export default Users;
+export default Settings;
 
 const User = ({ user }) => {
   return (

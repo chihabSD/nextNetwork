@@ -137,9 +137,7 @@ function SideMenu({
                   <Icon
                     name={menu.icon}
                     size="large"
-                    {...(router.query.username === username && {
-                      color: "teal",
-                    })}
+                    {...(isActive("/settings") && { color: "teal" })}
                   />
                   <MenuItemName>{menu.name}</MenuItemName>
                 </MenuItem>

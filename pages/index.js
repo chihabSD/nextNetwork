@@ -18,7 +18,7 @@ import getUserInfo from "../utils/getUserInfo";
 import MessageNotificationModal from "../components/Home/MessageNotificationModal";
 import newMsgSound from "../utils/newMsgSound";
 import NotificationPortal from "../components/Home/NotificationPortal";
-
+import styled from "styled-components";
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
@@ -94,7 +94,7 @@ function Index({ user, postsData, errorLoading }) {
   }, []);
 
   return (
-    <>
+    <Container>
       {notificationPopup && newNotification !== null && (
         <NotificationPortal
           newNotification={newNotification}
@@ -141,7 +141,7 @@ function Index({ user, postsData, errorLoading }) {
           </InfiniteScroll>
         )}
       </Segment>
-    </>
+    </Container>
   );
 }
 
@@ -161,3 +161,15 @@ Index.getInitialProps = async (ctx) => {
 };
 
 export default Index;
+const Container = styled.div`
+  background: white;
+  width: "100%";
+  display: 1;
+  flex: 1;
+  margin-right: 15px;
+  /* padding-top: 10px; */
+
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* display: grid; */
+  /* grid-template-rows: auto; */
+`;

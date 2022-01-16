@@ -16,7 +16,7 @@ import Following from "../components/Profile/Following";
 import UpdateProfile from "../components/Profile/UpdateProfile";
 import Settings from "../components/Profile/Settings";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
-
+import styled from "styled-components";
 function ProfilePage({
   errorLoading,
   profile,
@@ -80,12 +80,7 @@ function ProfilePage({
   }, []);
 
   return (
-    <div
-      style={{
-        backgroundColor: "white",
-        width: "100%",
-      }}
-    >
+    <Container>
       {showToastr && <PostDeleteToastr />}
 
       <Grid stackable>
@@ -160,7 +155,7 @@ function ProfilePage({
           </Grid.Column>
         </Grid.Row>
       </Grid>
-    </div>
+    </Container>
   );
 }
 
@@ -182,3 +177,15 @@ ProfilePage.getInitialProps = async (ctx) => {
 };
 
 export default ProfilePage;
+const Container = styled.div`
+  background: white;
+  width: "100%";
+  display: 1;
+  flex: 1;
+  margin-right: 15px;
+  /* padding-top: 10px; */
+
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* display: grid; */
+  /* grid-template-rows: auto; */
+`;
