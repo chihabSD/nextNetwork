@@ -115,32 +115,38 @@ function Index({ user, postsData, errorLoading }) {
         />
       )}
 
-      <Segment>
+      <>
         <CreatePost user={user} setPosts={setPosts} />
 
         {posts.length === 0 || errorLoading ? (
           <NoPosts />
         ) : (
-          <InfiniteScroll
-            hasMore={hasMore}
-            next={fetchDataOnScroll}
-            loader={<PlaceHolderPosts />}
-            endMessage={<EndMessage />}
-            dataLength={posts.length}
-          >
-            {posts.map((post) => (
-              <CardPost
-                socket={socket}
-                key={post._id}
-                post={post}
-                user={user}
-                setPosts={setPosts}
-                setShowToastr={setShowToastr}
-              />
-            ))}
-          </InfiniteScroll>
+          <PostContainer>
+            <InfiniteScroll
+              hasMore={hasMore}
+              next={fetchDataOnScroll}
+              loader={<PlaceHolderPosts />}
+              endMessage={<EndMessage />}
+              dataLength={posts.length}
+            >
+              {posts.map((post) => (
+                <CardPost
+                  style={{
+                    width: "100%",
+                    marginTop: "20px",
+                  }}
+                  socket={socket}
+                  key={post._id}
+                  post={post}
+                  user={user}
+                  setPosts={setPosts}
+                  setShowToastr={setShowToastr}
+                />
+              ))}
+            </InfiniteScroll>
+          </PostContainer>
         )}
-      </Segment>
+      </>
     </Container>
   );
 }
@@ -162,14 +168,40 @@ Index.getInitialProps = async (ctx) => {
 
 export default Index;
 const Container = styled.div`
-  background: white;
+  background: #edeef0;
   width: "100%";
   display: 1;
   flex: 1;
+  overflow: auto;
+  position: relative;
   margin-right: 15px;
   /* padding-top: 10px; */
 
   /* grid-template-columns: repeat(3, 1fr); */
   /* display: grid; */
   /* grid-template-rows: auto; */
+`;
+const PostContainer = styled.div`
+  border: 1px solid transparent;
+  /* margin-right: 20px; */
+  margin: auto;
+  padding: 15px;
+  width: 100%;
+  /* background-color: white; */
+  /* padding-top: 10px; */
+
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* display: grid; */
+  /* grid-template-rows: auto; */
+`;
+const CardContainer = styled.div`
+  box-shadow: 0px 1px 5px -34px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 1px 5px -34px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 5px -34px rgba(0, 0, 0, 0.75);
+  border: 1px solid transparent;
+  /* margin-right: 20px; */
+  margin: auto;
+  padding: 15px;
+  width: 95%;
+  background-color: white;
 `;

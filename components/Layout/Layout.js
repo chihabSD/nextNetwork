@@ -37,6 +37,7 @@ function Layout({ children, user }) {
   Router.onRouteChangeError = () => nprogress.done();
 
   return (
+    // <div style={{ backgroundColor: "#edeef0", paddingBottom: 100 }}>
     <div style={{ backgroundColor: "#edeef0", paddingBottom: 100 }}>
       {user ? (
         <>
@@ -179,6 +180,7 @@ const DataContainer = styled.div`
 `;
 const ChildrenContainer = styled.div`
   margin-left: 15px;
+  background-color: #edeef0;
   display: flex;
   flex: 1;
   height: 70vh;

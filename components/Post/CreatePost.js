@@ -3,6 +3,7 @@ import { Form, Button, Image, Divider, Message, Icon } from "semantic-ui-react";
 import uploadPic from "../../utils/uploadPicToCloudinary";
 import { submitNewPost } from "../../utils/postActions";
 import CropImageModal from "./CropImageModal";
+import styled from "styled-components";
 
 function CreatePost({ user, setPosts }) {
   const [newPost, setNewPost] = useState({ text: "", location: "" });
@@ -17,7 +18,7 @@ function CreatePost({ user, setPosts }) {
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value, files } = e.target;
 
     if (name === "media") {
@@ -27,7 +28,7 @@ function CreatePost({ user, setPosts }) {
       }
     }
 
-    setNewPost(prev => ({ ...prev, [name]: value }));
+    setNewPost((prev) => ({ ...prev, [name]: value }));
   };
 
   const addStyles = () => ({
@@ -37,10 +38,10 @@ function CreatePost({ user, setPosts }) {
     border: "dotted",
     paddingTop: media === null && "60px",
     cursor: "pointer",
-    borderColor: highlighted ? "green" : "black"
+    borderColor: highlighted ? "green" : "black",
   });
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     let picUrl;
@@ -69,7 +70,7 @@ function CreatePost({ user, setPosts }) {
   };
 
   return (
-    <>
+    <div>
       {showModal && (
         <CropImageModal
           mediaPreview={mediaPreview}
@@ -79,108 +80,150 @@ function CreatePost({ user, setPosts }) {
         />
       )}
 
-      <Form error={error !== null} onSubmit={handleSubmit}>
-        <Message
-          error
-          onDismiss={() => setError(null)}
-          content={error}
-          header="Oops!"
-        />
-
-        <Form.Group>
-          <Image src={user.profilePicUrl} circular avatar inline />
-          <Form.TextArea
-            placeholder="Whats Happening"
-            name="text"
-            value={newPost.text}
-            onChange={handleChange}
-            rows={4}
-            width={14}
-          />
-        </Form.Group>
-
-        <Form.Group>
-          <Form.Input
-            value={newPost.location}
-            name="location"
-            onChange={handleChange}
-            label="Add Location"
-            icon="map marker alternate"
-            placeholder="Want to add Location?"
-          />
-
-          <input
-            ref={inputRef}
-            onChange={handleChange}
-            name="media"
-            style={{ display: "none" }}
-            type="file"
-            accept="image/*"
-          />
-        </Form.Group>
-
-        <div
-          onClick={() => inputRef.current.click()}
-          style={addStyles()}
-          onDragOver={e => {
-            e.preventDefault();
-            setHighlighted(true);
-          }}
-          onDragLeave={e => {
-            e.preventDefault();
-            setHighlighted(false);
-          }}
-          onDrop={e => {
-            e.preventDefault();
-            setHighlighted(true);
-
-            const droppedFile = Array.from(e.dataTransfer.files);
-
-            setMedia(droppedFile[0]);
-            setMediaPreview(URL.createObjectURL(droppedFile[0]));
-          }}
+      <FormContainer>
+        <Form
+          error={error !== null}
+          onSubmit={handleSubmit}
+          // style={{ backgroundColor: "white" }}
         >
-          {media === null ? (
-            <Icon name="plus" size="big" />
-          ) : (
-            <Image
-              style={{ height: "150px", width: "150px" }}
-              src={mediaPreview}
-              alt="PostImage"
-              centered
-              size="medium"
+          <Message
+            error
+            onDismiss={() => setError(null)}
+            content={error}
+            header="Oops!"
+          />
+
+          <TopSection>
+            <Form.TextArea
+              placeholder="Whats Happening"
+              name="text"
+              style={{ backgroundColor: "#edeef0" }}
+              value={newPost.text}
+              onChange={handleChange}
+              rows={4}
+              width={16}
             />
-          )}
-        </div>
+          </TopSection>
+          <ButtomSection>
+            <Attachments>
+              <Form.Group>
+                <Form.Input
+                  value={newPost.location}
+                  name="location"
+                  onChange={handleChange}
+                  // label="Add Location"
+                  icon="map marker alternate"
+                  placeholder="Want to add Location?"
+                />
+                {/* <input /> */}
 
-        {mediaPreview !== null && (
-          <>
-            <Divider hidden />
+                <input
+                  ref={inputRef}
+                  onChange={handleChange}
+                  name="media"
+                  style={{ display: "none" }}
+                  type="file"
+                  accept="image/*"
+                />
+              </Form.Group>
+              {/* <div 
+              onClick={() => inputRef.current.click()}
+              style={addStyles()}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setHighlighted(true);
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setHighlighted(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setHighlighted(true);
 
+                const droppedFile = Array.from(e.dataTransfer.files);
+
+                setMedia(droppedFile[0]);
+                setMediaPreview(URL.createObjectURL(droppedFile[0]));
+              }}
+            >
+              {media === null ? (
+                <Icon name="plus" size="small" />
+              ) : (
+                <Image
+                  style={{ height: "10px", width: "10px" }}
+                  src={mediaPreview}
+                  alt="PostImage"
+                  centered
+                  size="medium"
+                />
+              )}
+            </div> */}
+              {mediaPreview !== null && (
+                <>
+                  <Button
+                    content="Crop Image"
+                    type="button"
+                    primary
+                    circular
+                    onClick={() => setShowModal(true)}
+                  />
+                </>
+              )}
+            </Attachments>
             <Button
-              content="Crop Image"
-              type="button"
-              primary
-              circular
-              onClick={() => setShowModal(true)}
-            />
-          </>
-        )}
-
-        <Divider hidden />
-
-        <Button
-          circular
-          disabled={newPost.text === "" || loading}
-          content={<strong>Post</strong>}
-          style={{ backgroundColor: "#1DA1F2", color: "white" }}
-          icon="send"
-          loading={loading}
-        />
-      </Form>
-      <Divider />
-    </>
+              positive
+              disabled={newPost.text === "" || loading}
+              // content={<strong>Post</strong>}
+              // style={{ backgroundColor: "#1DA1F2", color: "white" }}
+              // icon="send"
+              loading={loading}
+            >
+              Post
+            </Button>
+          </ButtomSection>
+        </Form>
+      </FormContainer>
+      {/* <Divider /> */}
+    </div>
   );
 }
 
 export default CreatePost;
+const ButtomSection = styled.div`
+  display: flex;
+  background-color: "#edeef0";
+  flex: 1;
+  margin-top: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+const TopSection = styled.div`
+  width: "100%";
+  display: 1;
+  flex: 1;
+  flex-direction: row;
+  /* background-color: red; */
+  align-items: center;
+`;
+const Attachments = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  margin-right: 10px;
+`;
+
+const FormContainer = styled.div`
+  box-shadow: 0px 1px 5px -34px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 1px 5px -34px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 1px 5px -34px rgba(0, 0, 0, 0.75);
+  border: 1px solid transparent;
+  /* margin-right: 20px; */
+  margin: auto;
+  padding: 15px;
+  width: 95%;
+  background-color: white;
+  margin-bottom: 30px;
+`;
