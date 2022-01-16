@@ -37,9 +37,9 @@ function Layout({ children, user }) {
   return (
     <>
       {/* <HeadTags /> */}
-      <Header />
       {user ? (
         <>
+          <Header user={user} />
           <style>{mediaStyles}</style>
 
           <MediaContextProvider>

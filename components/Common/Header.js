@@ -10,7 +10,8 @@ import baseUrl from "../../utils/baseUrl";
 import { NoUserFound } from "../Layout/NoData";
 let cancel;
 
-function Header() {
+function Header({ user }) {
+  const { username } = user;
   const users = [
     { _id: 0, name: "chiahbeddine ahmed" },
     { _id: 1, name: "chiahbeddine ahmed" },
@@ -116,9 +117,11 @@ function Header() {
         <Bell>
           <Icon name="bell outline" size="large" />
         </Bell>
-        <ProfileImageContainer>
-          <ProfileImage src={userPng}></ProfileImage>
-        </ProfileImageContainer>
+        <Link href={`/${username}`}>
+          <ProfileImageContainer>
+            <ProfileImage src={userPng}></ProfileImage>
+          </ProfileImageContainer>
+        </Link>
       </SectionTwo>
       {/* <Logo> LOGOO </Logo>
       <SearchContainer>
@@ -240,6 +243,7 @@ const Result = styled.div`
 const ProfileImageContainer = styled.div`
   width: 40px;
   height: 40px;
+  cursor: pointer;
   margin-right: 10px;
   border-radius: 50%;
 `;
