@@ -35,7 +35,8 @@ function Layout({ children, user }) {
   Router.onRouteChangeError = () => nprogress.done();
 
   return (
-    <>
+    <div style={{ backgroundColor: "#edeef0" }}>
+      {/* <div style={{ backgroundColor: "white" }}> */}
       {/* <HeadTags /> */}
       {user ? (
         <>
@@ -43,13 +44,24 @@ function Layout({ children, user }) {
           <style>{mediaStyles}</style>
 
           <MediaContextProvider>
-            <div style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+            <div
+              style={{
+                marginLeft: "2rem",
+                marginRight: "2rem",
+
+                paddingLeft: "1rem",
+                paddingRight: "1rem",
+                height: "90vh",
+                // backgroundColor: "white",
+                backgroundColor: "#edeef0",
+              }}
+            >
               <Media greaterThanOrEqual="computer">
                 <Ref innerRef={contextRef}>
                   <Grid>
                     {!messagesRoute ? (
                       <>
-                        <Grid.Column floated="left" width={2}>
+                        <Grid.Column floated="left" width={3}>
                           <Sticky context={contextRef}>
                             <SideMenu user={user} pc />
                           </Sticky>
@@ -150,7 +162,7 @@ function Layout({ children, user }) {
           </Container>
         </>
       )}
-    </>
+    </div>
   );
 }
 

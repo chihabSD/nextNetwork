@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styled from "styled-components";
-import { List, Image, Search, Icon } from "semantic-ui-react";
+import { List, Image, Search, Button, Icon } from "semantic-ui-react";
 import axios from "axios";
 import cookie from "js-cookie";
 import Router from "next/router";
@@ -114,9 +114,11 @@ function Header({ user }) {
         </SearchContainer>
       </SectionOne>
       <SectionTwo>
-        <Bell>
-          <Icon name="bell outline" size="large" />
-        </Bell>
+        <CreatePost>
+          <Button color="twitter">
+            <Icon name="write square" /> Create
+          </Button>
+        </CreatePost>
         <Link href={`/${username}`}>
           <ProfileImageContainer>
             <ProfileImage src={userPng}></ProfileImage>
@@ -142,8 +144,9 @@ function Header({ user }) {
 export default Header;
 const HeaderContainer = styled.div`
   /* height: 50px; */
-  border-bottom: 0.5px solid #f1f1f1;
-  margin-bottom: 20px;
+  background-color: white;
+  border-bottom: 1px solid #f1f1f1;
+  margin-bottom: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -166,16 +169,16 @@ const SectionOne = styled.div`
 const SectionTwo = styled.div`
   display: flex;
   /* width: 300px; */
-
-  justify-content: space-between;
-
+  justify-content: flex-end;
   flex: 1;
   height: 60px;
   align-items: center;
 
   /* background-color: blue; */
 `;
-const Bell = styled.div``;
+const CreatePost = styled.div`
+  margin-right: 20px;
+`;
 const Logo = styled.div``;
 
 const SearchContainer = styled.div`
